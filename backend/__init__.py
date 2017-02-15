@@ -1,18 +1,24 @@
 import json
 import htmlPy
 from .send import Nacelle
+from .sendudp import Debug
 
 class BackEnd(htmlPy.Object):
 
     def __init__(self, app):
         super(BackEnd, self).__init__()
         self.app = app
+        self.debug = Debug()
+
+    @htmlPy.Slot(str)
+    def print_log(self, log):
+        self.debug.log(log)
 
     @htmlPy.Slot(str, result=str)
-    def print_log(self, log):
-        print(log)
+    def test_conn(self, words):
+        print(words)
         self.app.evaluate_javascript('console.log("python to js")')
-        return 'ok'
+        return 'test conn ok'
 
 class Config(htmlPy.Object):
 
