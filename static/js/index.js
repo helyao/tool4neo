@@ -29,17 +29,24 @@ function drawCenter() {
     context.stroke();
 }
 
+
 function touch(e) {
     var event = e || window.event;
     switch(event.type) {
         case 'touchstart':
-            console.log('[TouchStart] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
+            if (event.touches.length == 1) {
+                console.log('[TouchStart] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
+            }
             break;
         case 'touchmove':
-            console.log('[TouchMove] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
+            if (event.touches.length == 1) {
+                console.log('[TouchMove] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
+            }
             break;
         case 'touchend':
-            console.log('[TouchEnd] x = ' + event.changedTouches[0].clientX + '; y = ' + event.changedTouches[0].clientY);
+            if (event.changedTouches.length == 1) {
+                console.log('[TouchEnd] x = ' + event.changedTouches[0].clientX + '; y = ' + event.changedTouches[0].clientY);
+            }
             break;
     }
 }
