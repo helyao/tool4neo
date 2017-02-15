@@ -3,8 +3,21 @@ html, body {
     height: 100%;
 }
 
-canvas {
-    border: 1px;
+#canvas {
+    border: 0;
     height: 100%;
     width: 100%;
+    background-color: beige;
+}
+
+body {
+    text-align: center;
+    font-family: Segoe UI Light,Segoe UI,Microsoft Jhenghei,Mirco Yahei,'sans-serif';
+    background-color: black;
+    color: white;
+}
+
+#test {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: green;
 }

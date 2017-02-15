@@ -9,6 +9,7 @@ class BackEnd(htmlPy.Object):
         super(BackEnd, self).__init__()
         self.app = app
         self.debug = Debug()
+        self.debug.log('test')
 
     @htmlPy.Slot(str)
     def print_log(self, log):
@@ -17,6 +18,7 @@ class BackEnd(htmlPy.Object):
     @htmlPy.Slot(str, result=str)
     def test_conn(self, words):
         print(words)
+        self.debug.log(words)
         self.app.evaluate_javascript('console.log("python to js")')
         return 'test conn ok'
 
