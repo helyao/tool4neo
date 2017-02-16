@@ -19,7 +19,7 @@ class NEO_CMD:
 
     def yaw(self, val):    # 方位
         if isinstance(val, (int, float)):
-            return bytes(CMD_Packet(0xAA, 0x01, 0x01, 0x03, val, 0x55)).decode('latin-1')
+            return bytes(CMD_Packet(0xAA, 0x01, 0x01, 0x03, val, 0x55))
 
     def pitch(self, val):  # 俯仰
         if isinstance(val, (int, float)):

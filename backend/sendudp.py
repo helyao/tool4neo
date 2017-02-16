@@ -16,8 +16,11 @@ class UDP:
         self.udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         # self.udp.sendto('udp connected\n'.encode('utf-8'), (self.ip, self.port))
 
-    def send(self, str):
+    def sendstr(self, str):
         self.udp.sendto((str+'\n').encode('utf-8'), (self.ip, self.port))
+
+    def sendhex(self, bytes):
+        self.udp.sendto(bytes, (self.ip, self.port))
 
 
 if __name__ == '__main__':
