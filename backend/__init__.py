@@ -9,10 +9,10 @@ class BackEnd(htmlPy.Object):
         super(BackEnd, self).__init__()
         self.app = app
         self.debug = Debug()
-        self.debug.log('test')
 
     @htmlPy.Slot(str)
     def print_log(self, log):
+        print(log)
         self.debug.log(log)
 
     @htmlPy.Slot(str, result=str)
