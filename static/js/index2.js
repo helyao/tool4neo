@@ -10,7 +10,7 @@ function sizeReporter() {   // Resize player when window resize
 function drawCenter() {
     sizeReporter();
 
-    var canvas = document.getElementById('pad');
+    var canvas = document.getElementById('canvas');
     if (canvas == null) {
         return false;
     }
@@ -29,36 +29,52 @@ function drawCenter() {
     context.stroke();
 }
 
+
 function touch(e) {
     var event = e || window.event;
-    var x,y;
     switch(event.type) {
         case 'touchstart':
             if (event.touches.length == 1) {
                 console.log('[TouchStart] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
-                BackEnd.print_log('[TouchStart] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
-                x = ((event.touches[0].clientX - viewPortWidth/2) / (viewPortWidth/2)).toFixed(2);
-                y = -((event.touches[0].clientY - viewPortHeight/2) / (viewPortHeight/2)).toFixed(2);
-                BackEnd.update_data('{"state": 1, "x": ' + x + ', "y": ' + y + '}');
+                BackEnd.print_log('touchstart');
             }
             break;
         case 'touchmove':
             if (event.touches.length == 1) {
                 console.log('[TouchMove] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
-                BackEnd.print_log('[TouchMove] x = ' + event.touches[0].clientX + '; y = ' + event.touches[0].clientY);
-                x = ((event.touches[0].clientX - viewPortWidth/2) / (viewPortWidth/2)).toFixed(2);
-                y = -((event.touches[0].clientY - viewPortHeight/2) / (viewPortHeight/2)).toFixed(2);
-                BackEnd.update_data('{"state": 2, "x": ' + x + ', "y": ' + y + '}');
+                BackEnd.print_log('touchmove');
             }
             break;
         case 'touchend':
             if (event.changedTouches.length == 1) {
                 console.log('[TouchEnd] x = ' + event.changedTouches[0].clientX + '; y = ' + event.changedTouches[0].clientY);
-                BackEnd.print_log('[TouchEnd] x = ' + event.changedTouches[0].clientX + '; y = ' + event.changedTouches[0].clientY);
-                x = ((event.changedTouches[0].clientX - viewPortWidth/2) / (viewPortWidth/2)).toFixed(2);
-                y = -((event.changedTouches[0].clientY - viewPortHeight/2) / (viewPortHeight/2)).toFixed(2);
-                BackEnd.update_data('{"state": 0, "x": ' + x + ', "y": ' + y + '}');
+                BackEnd.print_log('touchend');
             }
+            break;
+    }
+}
+
+var mouseTigger = false;
+
+function click(e) {
+    var event = e || window.event;
+    switch (event.type) {
+        case 'mousedown':
+            mouseTigger = true;
+            console.log('[MouseDown] x = ' + event.clientX + '; y = ' + event.clientY);
+            BackEnd.print_log('[MouseDown] x = ' + event.clientX + '; y = ' + event.clientY);
+            break;
+        case 'mousemove':
+            if (mouseTigger) {
+                console.log('[MouseMove] x = ' + event.clientX + '; y = ' + event.clientY);
+                BackEnd.print_log('[MouseMove] x = ' + event.clientX + '; y = ' + event.clientY);
+            }
+            break;
+        case 'mouseout':
+        case 'mouseup':
+            mouseTigger = false;
+            console.log('[MouseOut|Up] x = ' + event.clientX + '; y = ' + event.clientY);
+            BackEnd.print_log('[MouseOut|Up] x = ' + event.clientX + '; y = ' + event.clientY);
             break;
     }
 }
@@ -69,6 +85,11 @@ window.onload = function () {
     document.addEventListener('touchstart', touch, false);
     document.addEventListener('touchmove', touch, false);
     document.addEventListener('touchend', touch, false);
+
+    document.getElementById('canvas').addEventListener('mousedown', click, false);
+    document.getElementById('canvas').addEventListener('mousemove', click, false);
+    document.getElementById('canvas').addEventListener('mouseout', click, false);
+    document.getElementById('canvas').addEventListener('mouseup', click, false);
 };
 
 window.addEventListener('resize', function() {
