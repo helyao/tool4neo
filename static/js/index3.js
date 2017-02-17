@@ -65,4 +65,42 @@ window.onload = function () {
     initPad();
     initZoom();
     initSlider();
+    initEvent();
 };
+
+function initEvent() {
+    $("#valYAW").on("change", function(slideEvt){
+        console.log("YAW " + slideEvt.value.newValue);
+    });
+    $("#valPITCH").on("change", function(slideEvt){
+        console.log("PITCH " + slideEvt.value.newValue);
+    });
+    $("#valZOOM").on("change", function(slideEvt){
+        console.log("ZOOM " + slideEvt.value.newValue);
+    });
+    $("#setting").on("click", function() {
+        console.log("Setting button clicked");
+        if (checkIPVaild($("#rs232ip").val()) && checkIPVaild($("#debugip").val()) && checkPortVaild($("#rs232port").val()) && checkPortVaild($("#debugport").val())) {
+            console.log("Vaild setting");
+        }
+        else {
+            console.log("Invaild setting");
+        }
+    });
+}
+
+function checkIPVaild(ip) {
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) {
+        return true;
+    }
+    return false;
+}
+
+function checkPortVaild(port) {
+    if (port.match(/^\d+$/)) {
+        if (parseInt(port) > 0 && parseInt(port) < 65536) {
+            return true;
+        }
+    }
+    return false;
+}
