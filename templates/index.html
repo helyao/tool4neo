@@ -54,13 +54,13 @@
                         <p class="text-success">IP:</p>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 setting-bar">
-                        <input value="192.168.1.70">
+                        <input value="{{ rs232_ip }}">
                     </div>
                     <div class="col-sm-1 col-md-1 col-lg-1 setting-bar">
                         <p class="text-success">PORT:</p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2 setting-bar">
-                        <input value="1234">
+                        <input value="{{ rs232_port }}">
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -71,13 +71,13 @@
                         <p class="text-success">IP:</p>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 setting-bar">
-                        <input value="192.168.1.150">
+                        <input value="{{ debug_ip }}">
                     </div>
                     <div class="col-sm-1 col-md-1 col-lg-1 setting-bar">
                         <p class="text-success">PORT:</p>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2 setting-bar">
-                        <input value="7878">
+                        <input value="{{ debug_port }}">
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -98,9 +98,10 @@
             </div>
         </div>
     </div>
+    <meta id="init-data" yaw="{{ yaw }}" pitch="{{ pitch }}" zoom="{{ zoom }}">
 </body>
 <script src="{{ 'js/jquery-2.2.3.min.js'|staticfile }}"></script>
 <script src="{{ 'js/bootstrap.min.js'|staticfile }}"></script>
 <script src="{{ 'js/bootstrap-slider.min.js'|staticfile }}"></script>
-<script src="{{ 'js/index3.js'|staticfile }}"></script>
+<script src="{{ 'js/index.js'|staticfile }}"></script>
 </html>
