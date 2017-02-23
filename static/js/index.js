@@ -161,6 +161,12 @@ var gesture_direction = new AlloyFinger(document.getElementById("pad"), {
                 BackEnd.set_control('{"c_yaw": ' + x + ', "c_pitch": ' + y + '}');
             }
         }
+    },
+    touchEnd: function() {
+        var touchlog = '[pad]touchEnd x = 0; y = 0';
+        console.log(touchlog);
+        BackEnd.print_log(touchlog);
+        BackEnd.set_control('{"c_yaw": 0, "c_pitch": 0}');
     }
 });
 
@@ -192,5 +198,11 @@ var gesture_zoom = new AlloyFinger(document.getElementById("zoom"), {
                 BackEnd.set_control('{"c_zoom": ' + y + '}');
             }
         }
+    },
+    touchEnd: function() {
+        var touchlog = '[zoom]touchEnd y = 0';
+        console.log(touchlog);
+        BackEnd.print_log(touchlog);
+        BackEnd.set_control('{"c_zoom": 0}');
     }
 });

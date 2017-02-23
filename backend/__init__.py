@@ -39,14 +39,14 @@ class BackEnd(htmlPy.Object):
             self.zoom = para['zoom']
         else:
             print("update_para find invalid parameter")
-        print('yaw = {0}'.format(self.yaw))
-        print('pitch = {0}'.format(self.pitch))
-        print('zoom = {0}'.format(self.zoom))
+        # print('yaw = {0}'.format(self.yaw))
+        # print('pitch = {0}'.format(self.pitch))
+        # print('zoom = {0}'.format(self.zoom))
 
     # update rs232 and debug udp ip&port
     @htmlPy.Slot(str)
     def update_conn(self, str):
-        print('update_conn: ' + str)
+        # print('update_conn: ' + str)
         conn = json.loads(str)
         try:
             self.debug = UDP(ip=conn['debug_ip'], port=conn['debug_port'])
@@ -58,7 +58,7 @@ class BackEnd(htmlPy.Object):
     # current control response
     @htmlPy.Slot(str)
     def set_control(self, str):
-        print('set_control: ' + str)
+        # print('set_control: ' + str)
         control = json.loads(str)
         if "c_yaw" in control:
             self.mem_yaw = round(control['c_yaw'] * self.yaw)
@@ -70,7 +70,7 @@ class BackEnd(htmlPy.Object):
     # Print ui log both on console and udp listener
     @htmlPy.Slot(str)
     def print_log(self, log):
-        print(log)
+        # print(log)
         self.debug.send(log)
 
     # just for test
