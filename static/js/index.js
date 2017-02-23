@@ -1,7 +1,22 @@
+// Direction pad size info
+var pad_x = 0;
+var pad_y = 0;
+var pad_width = 0;
+var pad_height = 0;
+// Zoom pad size info
+var zoom_x = 0;
+var zoom_y = 0;
+var zoom_width = 0;
+var zoom_height = 0;
+
 // Draw guide line on direction canvas
 function initPad() {
-    $("#pad").css("width", $("#pad").parent().css("width"));
-    $("#pad").css("height", $("#pad").parent().css("height"));
+    pad_x = $("#pad").parent().offset().left;
+    pad_y = $("#pad").parent().offset().top;
+    pad_width = parseInt($("#pad").parent().css("width"));
+    pad_height = parseInt($("#pad").parent().css("height"));
+    $("#pad").css("width", pad_width);
+    $("#pad").css("height", pad_height);
 
     var canvas = document.getElementById('pad');
     if (canvas == null) {
@@ -22,8 +37,12 @@ function initPad() {
 
 // Draw guide line on zoom canvas
 function initZoom() {
-    $("#zoom").css("width", $("#zoom").parent().css("width"));
-    $("#zoom").css("height", $("#zoom").parent().css("height"));
+    zoom_x = $("#zoom").parent().offset().left;
+    zoom_y = $("#zoom").parent().offset().top;
+    zoom_width = parseInt($("#zoom").parent().css("width"));
+    zoom_height = parseInt($("#zoom").parent().css("height"));
+    $("#zoom").css("width", zoom_width);
+    $("#zoom").css("height", zoom_height);
 
     var canvas = document.getElementById('zoom');
     if (canvas == null) {
@@ -113,3 +132,65 @@ function checkPortVaild(port) {
     }
     return false;
 }
+
+var gesture_direction = new AlloyFinger(document.getElementById("pad"), {
+    touchStart: function (evt) {
+        var x = evt.touches[0].clientX.toFixed(2);
+        var y = evt.touches[0].clientY.toFixed(2);
+        if (x > pad_x && x < (pad_x+pad_width)) {
+            if (y > pad_y && y < (pad_y+pad_height)) {
+                x = (x - (pad_x + (pad_width/2))) / (pad_width/2);
+                y = -(y - (pad_y + (pad_height/2))) / (pad_height/2);
+                var touchlog = '[pad]touchStart x = ' + x.toFixed(2) + '; y = ' + y.toFixed(2);
+                console.log(touchlog);
+                BackEnd.print_log(touchlog);
+                BackEnd.set_control('{"c_yaw": ' + x + ', "c_pitch": ' + y + '}');
+            }
+        }
+    },
+    touchMove: function (evt) {
+        var x = evt.changedTouches[0].clientX.toFixed(2);
+        var y = evt.changedTouches[0].clientY.toFixed(2);
+        if (x > pad_x && x < (pad_x+pad_width)) {
+            if (y > pad_y && y < (pad_y+pad_height)) {
+                x = (x - (pad_x + (pad_width/2))) / (pad_width/2);
+                y = -(y - (pad_y + (pad_height/2))) / (pad_height/2);
+                var touchlog = '[pad]touchMove x = ' + x.toFixed(2) + '; y = ' + y.toFixed(2);
+                console.log(touchlog);
+                BackEnd.print_log(touchlog);
+                BackEnd.set_control('{"c_yaw": ' + x + ', "c_pitch": ' + y + '}');
+            }
+        }
+    }
+});
+
+var gesture_zoom = new AlloyFinger(document.getElementById("zoom"), {
+    touchStart: function (evt) {
+        var x = evt.touches[0].clientX.toFixed(2);
+        var y = evt.touches[0].clientY.toFixed(2);
+        if (x > zoom_x && x < (zoom_x+zoom_width)) {
+            if (y > zoom_y && y < (zoom_y+zoom_height)) {
+                x = (x - (zoom_x + (zoom_width/2))) / (zoom_width/2);
+                y = -(y - (zoom_y + (zoom_height/2))) / (zoom_height/2);
+                var touchlog = '[zoom]touchStart y = ' + y.toFixed(2);
+                console.log(touchlog);
+                BackEnd.print_log(touchlog);
+                BackEnd.set_control('{"c_zoom": ' + y + '}');
+            }
+        }
+    },
+    touchMove: function (evt) {
+        var x = evt.changedTouches[0].clientX.toFixed(2);
+        var y = evt.changedTouches[0].clientY.toFixed(2);
+        if (x > zoom_x && x < (zoom_x+zoom_width)) {
+            if (y > zoom_y && y < (zoom_y+zoom_height)) {
+                x = (x - (zoom_x + (zoom_width/2))) / (zoom_width/2);
+                y = -(y - (zoom_y + (zoom_height/2))) / (zoom_height/2);
+                var touchlog = '[zoom]touchMove y = ' + y.toFixed(2);
+                console.log(touchlog);
+                BackEnd.print_log(touchlog);
+                BackEnd.set_control('{"c_zoom": ' + y + '}');
+            }
+        }
+    }
+});

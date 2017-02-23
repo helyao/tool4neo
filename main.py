@@ -4,7 +4,8 @@ import htmlPy
 from config import config
 from backend import BackEnd
 
-RUN_MODE = 'development'
+# RUN_MODE = 'development'
+RUN_MODE = 'production'
 
 # Initial configurations
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
