@@ -9,6 +9,8 @@ class Config():
     yaw = 80
     pitch = 80
     zoom = 4
+    # CMD frequency(Hz)
+    rate = 90
 
     @classmethod
     def init_app(cls):
@@ -27,7 +29,9 @@ class Config():
         }
 
 class DevelopmentConfig(Config):
-    debug_ip = '192.168.1.150'
+    rs232_ip = '127.0.0.1'
+    rs232_port = 1234
+    debug_ip = '127.0.0.1'
     debug_port = 7878
 
     @classmethod
@@ -35,6 +39,11 @@ class DevelopmentConfig(Config):
         Config.init_app()
 
 class ProductionConfig(Config):
+    rs232_ip = '192.168.1.70'
+    rs232_port = 1234
+    debug_ip = '192.168.1.166'
+    debug_port = 7878
+
     @classmethod
     def init_app(self):
         Config.init_app()

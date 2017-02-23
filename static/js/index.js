@@ -1,3 +1,4 @@
+// Draw guide line on direction canvas
 function initPad() {
     $("#pad").css("width", $("#pad").parent().css("width"));
     $("#pad").css("height", $("#pad").parent().css("height"));
@@ -19,6 +20,7 @@ function initPad() {
     context.stroke();
 }
 
+// Draw guide line on zoom canvas
 function initZoom() {
     $("#zoom").css("width", $("#zoom").parent().css("width"));
     $("#zoom").css("height", $("#zoom").parent().css("height"));
@@ -38,6 +40,7 @@ function initZoom() {
     context.stroke();
 }
 
+// Init slider for paras' max range
 function initSlider() {
     $("#valYAW").slider({
         ticks: [-80, -60, -40, -20, 0, 20, 40, 60, 80],
@@ -68,20 +71,26 @@ window.onload = function () {
     initEvent();
 };
 
+// Event on slider and button
 function initEvent() {
     $("#valYAW").on("change", function(slideEvt){
         console.log("YAW " + slideEvt.value.newValue);
+        BackEnd.update_para('{"yaw":' + slideEvt.value.newValue + '}')
     });
     $("#valPITCH").on("change", function(slideEvt){
         console.log("PITCH " + slideEvt.value.newValue);
+        BackEnd.update_para('{"pitch":' + slideEvt.value.newValue + '}')
     });
     $("#valZOOM").on("change", function(slideEvt){
         console.log("ZOOM " + slideEvt.value.newValue);
+        BackEnd.update_para('{"zoom":' + slideEvt.value.newValue + '}')
     });
     $("#setting").on("click", function() {
         console.log("Setting button clicked");
         if (checkIPVaild($("#rs232ip").val()) && checkIPVaild($("#debugip").val()) && checkPortVaild($("#rs232port").val()) && checkPortVaild($("#debugport").val())) {
             console.log("Vaild setting");
+            var setting = '{"rs232_ip": "'+$("#rs232ip").val()+'", "rs232_port": '+$("#rs232port").val()+', "debug_ip": "'+$("#debugip").val()+'", "debug_port": '+$("#debugport").val()+'}';
+            BackEnd.update_conn(setting)
         }
         else {
             console.log("Invaild setting");
